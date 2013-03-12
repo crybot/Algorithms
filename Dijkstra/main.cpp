@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <stdlib.h>
 #include "graph.h"
+#include "stopwatch.h"
+
 using namespace std;
+
 
 pair<int,int> Split(string str)
 {
@@ -43,13 +45,13 @@ vector<string> Tokenize(const string & str)
 
 int main()
 {
-    clock_t begin = clock();
-
     int vertex;
     string str;
     Graph InitialGraph;
     pair<int, int> tuple;
     vector<string> tokens;
+    StopWatch watch;
+
     ifstream ff("dijkstraData.txt");
 
     while(ff.good())
@@ -65,11 +67,17 @@ int main()
     }
     ff.close();
 
+    watch.Start();
+
     InitialGraph.ShortestPath(1);
 
-    clock_t end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-    cout << "Tempo impiegato: " << elapsed_secs << endl;
+    watch.Stop();
+
+    cout << "Tempo impiegato: " << watch.ElapsedMilliseconds() << endl;
+
+//    clock_t end = clock();
+//    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+//    cout << "Tempo impiegato: " << elapsed_secs << endl;
 
     return 0;
 }
